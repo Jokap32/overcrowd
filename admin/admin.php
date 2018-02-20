@@ -127,6 +127,8 @@ span.psw {
 </head>
 <body>
     
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgWc5mUhyrIwyRYQNxPbgqtc1VhwoNjRs&callback=myMap"></script>
+
 <div class = "contentWrapper">
 
 <div class = "contactForm">
@@ -197,32 +199,39 @@ else {
 
 
 <div id="id01" class="modal">
-  
-  <form class="modal-content animate" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?page=admin";?>" method="POST">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="images/login.png" alt="Avatar" class="avatar">
-    </div>
 
-    <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+      function onSignIn(googleUser){
+      var profile=googleUser.getBasicProfile();
+      $(".g-signin2").css("display", "none");
+      $(".data").css("display", "block");
+      $("#pic").attr('src', profile.getImageUrl());
+      $("#email").text(profile.getEmail());
+    }
+    </script>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-        
-      <button type="submit">Login</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-    </div>
+    <meta name="google-signin-client_id" content="663095738920-fim1c65ta26o7tt39dbr4j048vn4c46h.apps.googleusercontent.com">
 
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>
-  </form>
+    <script type="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="script.js"></script>
+    <style>
+      .g-signin2{
+        margin-left: 500px;
+        margin-top: 200px;
+      }
+    </style>
+
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<div class="data">
+  <p>Profile Details</p>
+  <img id="pic" class="img-circle" width="100" height="100"/>
+  <p>Email Address</p>
+  <p id="email" class="alert-danger"></p>
+  <button onclick="signOut()" class="btn btn-danger">Sign Out</button>
 </div>
+
 
 <?php
 }?>
